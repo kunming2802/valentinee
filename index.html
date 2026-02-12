@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Valentine’s Day to My Special Person</title>
+
+<!-- Google Font เรียบหรู -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Prompt:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Prompt', sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#fff;
+    overflow:hidden;
+}
+
+/* พื้นหลังภาพ */
+.background{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:url('S__116236330.jpg') center/cover no-repeat;
+    z-index:-2;
+    filter:blur(2px) brightness(70%);
+}
+
+/* ฟิลเตอร์ดำทับ */
+.overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.65);
+    z-index:-1;
+}
+
+/* กล่องเนื้อหา */
+.content{
+    max-width:700px;
+    padding:40px;
+    backdrop-filter: blur(6px);
+}
+
+/* ข้อความหลัก */
+h1{
+    font-family:'Playfair Display', serif;
+    font-size:48px;
+    letter-spacing:2px;
+    color:#ff6fa5;
+    margin-bottom:20px;
+}
+
+p{
+    font-size:22px;
+    color:#f8c8dc;
+    margin-bottom:40px;
+}
+
+/* กล่องเพลง */
+.spotify-box{
+    background:rgba(255,105,180,0.08);
+    border:1px solid rgba(255,105,180,0.3);
+    padding:20px;
+    border-radius:20px;
+    backdrop-filter: blur(10px);
+}
+#heartCanvas{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:0;
+}
+
+</style>
+</head>
+<body>
+
+<div class="background"></div>
+<div class="overlay"></div>
+<canvas id="heartCanvas"></canvas>
+
+<div class="content">
+    <h1>-`♡'-Happy Valentine’s Day to My Special Person</h1>
+    <p>ㅤ♡ ขอบคุณที่เข้ามาในชีวิตพี่นะคะ<br>
+         เป็นรอยยิ้มให้พี่ตลอดไปเลยได้มั้ยคะ 𐔌՞. .՞𐦯<br>
+        ❀ พี่รักเทอมากนะคนเก่ง</p>
+
+    <div class="spotify-box">
+        <!-- เปลี่ยนลิงก์ Spotify ตรง src -->
+        <iframe style="border-radius:12px" 
+            src="https://open.spotify.com/embed/track/5zXYZPPSVH3lp0qGbmKT2Q?si=2fc351069a484623" 
+            width="100%" 
+            height="152" 
+            frameBorder="0" 
+            allowfullscreen="0" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+         
+        </iframe>
+    </div>
+</div>
+
+
+</body>
+</html>
+<script>
+const canvas = document.getElementById("heartCanvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let hearts = [];
+
+class Heart {
+    constructor(){
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 20 + 10;
+        this.speed = Math.random() * 0.8 + 0.5;
+        this.opacity = Math.random() * 0.2 + 0.05;
+    }
+
+    draw(){
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.scale(this.size/20, this.size/20);
+        ctx.beginPath();
+
+        // วาดหัวใจเส้นบางแบบศิลป์
+        for(let t=0; t<Math.PI*2; t+=0.01){
+            let x = 16 * Math.pow(Math.sin(t),3);
+            let y = 13*Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
+            ctx.lineTo(x, -y);
+        }
+
+        ctx.strokeStyle = `rgba(255,105,180,${this.opacity})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    update(){
+        this.y -= this.speed;
+        if(this.y < -20){
+            this.y = canvas.height + 20;
+            this.x = Math.random() * canvas.width;
+        }
+        this.draw();
+    }
+}
+
+for(let i=0;i<40;i++){
+    hearts.push(new Heart());
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    hearts.forEach(h => h.update());
+    requestAnimationFrame(animate);
+}
+
+animate();
+
+window.addEventListener("resize",()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+
