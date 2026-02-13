@@ -38,6 +38,23 @@
   pointer-events:none;
   z-index:0;
 }
+.signature{
+  position:fixed;
+  bottom:20px;
+  right:30px; /* ถ้าอยากซ้ายเปลี่ยนเป็น left:30px; */
+  font-size:14px;
+  letter-spacing:3px;
+  color:rgba(189,30,89,0.6);
+  font-style:italic;
+  z-index:3;
+  font-weight:500;
+  transition:0.3s ease;
+}
+
+.signature:hover{
+  color:#bd1e59;
+  transform:scale(1.05);
+}
 
 main{
   position:relative;
@@ -175,7 +192,10 @@ main{
       });
     })();
   </script>
- 
+ <div class="signature">
+   ♡ KUNMING
+</div>
+
 
 </body>
 </html>
